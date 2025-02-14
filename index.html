@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group button {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background-color: #45a049;
+        }
+        .video-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .video-list li {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+        .video-list li:hover {
+            background-color: #e1e1e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Video Downloader</h1>
+        </div>
+        <div class="input-group">
+            <label for="urlInput">Webseiten-Link eingeben:</label>
+            <input type="text" id="urlInput" placeholder="https://example.com">
+            <button onclick="fetchVideos()">Videos anzeigen</button>
+        </div>
+        <ul id="videoList" class="video-list"></ul>
+    </div>
+
+    <script>
+        function fetchVideos() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Bitte geben Sie einen gültigen Webseiten-Link ein.');
+                return;
+            }
+
+            // Hier würden Sie eine API oder einen Service aufrufen, um die verfügbaren Videos von der eingegebenen URL abzurufen.
+            // Dies ist ein Mockup-Beispiel, bei dem wir eine Liste von Videos simulieren.
+
+            const videoList = [
+                { id: 1, title: 'Video 1', downloadUrl: 'https://example.com/video1.mp4' },
+                { id: 2, title: 'Video 2', downloadUrl: 'https://example.com/video2.mp4' },
+                { id: 3, title: 'Video 3', downloadUrl: 'https://example.com/video3.mp4' }
+            ];
+
+            displayVideos(videoList);
+        }
+
+        function displayVideos(videos) {
+            const videoListElement = document.getElementById('videoList');
+            videoListElement.innerHTML = '';
+
+            videos.forEach(video => {
+                const listItem = document.createElement('li');
+                listItem.textContent = video.title;
+                listItem.onclick = () => downloadVideo(video.downloadUrl);
+                videoListElement.appendChild(listItem);
+            });
+        }
+
+        function downloadVideo(url) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = url.split('/').pop();
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
