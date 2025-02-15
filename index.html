@@ -24,22 +24,37 @@
 <body>
     <h1>🎥 Video Downloader</h1>
     <input type="text" id="videoUrl" placeholder="Gib die Video-URL ein">
-    <button onclick="downloadVideo()">Download starten</button>
+    <button onclick="downloadVideo()">Download-Link erstellen</button>
     <p id="result"></p>
 
     <script>
-        function downloadVideo() {
+        async function downloadVideo() {
             let url = document.getElementById("videoUrl").value;
             if (!url) {
                 alert("Bitte eine Video-URL eingeben!");
                 return;
             }
 
-            let apiUrl = `https://api.vevioz.com/api/button/mp4?url=${encodeURIComponent(url)}`;
+            let backendUrl = "http://localhost:5000";  // Falls du dein Backend online hostest, ändere dies!
 
-            document.getElementById("result").innerHTML = `
-                <a href="${apiUrl}" target="_blank">🔗 Video herunterladen</a>
-            `;
+            try {
+                let response = await fetch(`${backendUrl}/download`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url })
+                });
+
+                let data = await response.json();
+                if (data.downloadUrl) {
+                    document.getElementById("result").innerHTML = `
+                        <a href="${data.downloadUrl}" target="_blank">🔗 Hier klicken, um das Video herunterzuladen</a>
+                    `;
+                } else {
+                    document.getElementById("result").innerText = "Fehler beim Abrufen des Links!";
+                }
+            } catch (error) {
+                document.getElementById("result").innerText = "Server-Fehler!";
+            }
         }
     </script>
 </body>
