@@ -35,10 +35,10 @@
                 return;
             }
 
-            let backendUrl = "http://localhost:5000";  // Falls du dein Backend online hostest, ändere dies!
+            let backendUrl = "https://dein-backend.vercel.app/api/download";  // Hier die Vercel-URL deines Projekts einfügen
 
             try {
-                let response = await fetch(`${backendUrl}/download`, {
+                let response = await fetch(backendUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ url })
