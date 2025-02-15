@@ -35,7 +35,7 @@
                 return;
             }
 
-            let backendUrl = "https://videod.vercel.app/api/download";  // Backend-URL für die API
+            let backendUrl = "https://<your-vercel-url>/api/download";  // Deine Vercel-API URL hier
             try {
                 let response = await fetch(backendUrl, {
                     method: "POST",
