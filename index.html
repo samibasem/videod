@@ -24,7 +24,7 @@
 <body>
     <h1>🎥 Video Downloader</h1>
     <input type="text" id="videoUrl" placeholder="Gib die Video-URL ein">
-    <button onclick="downloadVideo()">Download-Link erstellen</button>
+    <button onclick="downloadVideo()">Download starten</button>
     <p id="result"></p>
 
     <script>
@@ -35,8 +35,7 @@
                 return;
             }
 
-            let backendUrl = "https://dein-backend.vercel.app/api/download";  // Hier die Vercel-URL deines Projekts einfügen
-
+            let backendUrl = "https://dein-backend-url.vercel.app/api/download";  // Backend-URL für die API
             try {
                 let response = await fetch(backendUrl, {
                     method: "POST",
@@ -45,6 +44,7 @@
                 });
 
                 let data = await response.json();
+
                 if (data.downloadUrl) {
                     document.getElementById("result").innerHTML = `
                         <a href="${data.downloadUrl}" target="_blank">🔗 Hier klicken, um das Video herunterzuladen</a>
@@ -53,6 +53,7 @@
                     document.getElementById("result").innerText = "Fehler beim Abrufen des Links!";
                 }
             } catch (error) {
+                console.error("Fehler im JavaScript:", error);
                 document.getElementById("result").innerText = "Server-Fehler!";
             }
         }
